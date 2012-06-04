@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.openmrs.module</groupId>
@@ -13,11 +14,17 @@
 	<description>API project for RHEA SHR Adapter Module</description>
 
 	<dependencies>
-		
+
 		<dependency>
 			<groupId>org.openmrs.api</groupId>
 			<artifactId>openmrs-api</artifactId>
 			<type>jar</type>
+			<exclusions>
+				<exclusion>
+					<groupId>ca.uhn.hapi</groupId>
+					<artifactId>hapi</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.openmrs.api</groupId>
@@ -40,5 +47,31 @@
 			<type>pom</type>
 		</dependency>
 	</dependencies>
-
+<!-- 		<dependency> -->
+<!-- 			<groupId>ca.uhn.hapi</groupId> -->
+<!-- 			<artifactId>hapi-structures-v25</artifactId> -->
+<!-- 			<version>1.2</version> -->
+<!-- 		</dependency> -->
+<!-- 	</dependencies> -->
+<!-- 	<build> -->
+<!-- 		<plugins> -->
+<!-- 			<plugin> -->
+<!-- 				<groupId>ca.uhn.hapi</groupId> -->
+<!-- 				<artifactId>hapi-sourcegen</artifactId> -->
+<!-- 				<version>1.2</version> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<goals> -->
+<!-- 							<goal>confgen</goal> -->
+<!-- 						</goals> -->
+<!-- 						<configuration> -->
+<!-- 							<profile>${project.basedir}/src/main/resources/org/openmrs/module/hl7output/custommodel/v25/ZPT_ZP1-conformance-profile.xml</profile> -->
+<!-- 							<targetDirectory>${project.basedir}/src/main/java/</targetDirectory> -->
+<!-- 							<packageName>org.openmrs.module.hl7output.custommodel.v25</packageName> -->
+<!-- 						</configuration> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 			</plugin> -->
+<!-- 		</plugins> -->
+<!-- 	</build> -->
 </project>

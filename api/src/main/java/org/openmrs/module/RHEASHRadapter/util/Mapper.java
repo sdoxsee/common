@@ -4,12 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.ConceptDatatype;
 import org.openmrs.ConceptMap;
@@ -19,7 +17,6 @@ import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.PersonAddress;
 import org.openmrs.api.ConceptService;
-import org.openmrs.api.context.Context;
 
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.DataTypeException;
@@ -41,9 +38,11 @@ public class Mapper {
 
 	Log log = LogFactory.getLog(this.getClass());
 	protected ConceptService conceptService;
-
+	protected MapperPID mapperPid;
+	
 	public Mapper(ConceptService conceptService) {
 		this.conceptService = conceptService;
+		this.mapperPid = new MapperPID();
 	}
 
 	protected void mapToORCs(ORU_R01 r01, List<Encounter> encounterList)
@@ -55,61 +54,9 @@ public class Mapper {
 			orderORCCount++;
 		}
 	}
-
-	protected void mapToPID(PID pid, Patient patient) throws DataTypeException,
-			HL7Exception {
-		Cohort singlePatientCohort = new Cohort();
-		singlePatientCohort.addMember(patient.getId());
-
-		Map<Integer, String> patientIdentifierMap = Context
-				.getPatientSetService().getPatientIdentifierStringsByType(
-						singlePatientCohort,
-						Context.getPatientService()
-								.getPatientIdentifierTypeByName(
-										RHEAHL7Constants.IDENTIFIER_TYPE));
-
-		pid.getSetIDPID().setValue(RHEAHL7Constants.IDPID);
-		pid.getPatientIdentifierList(0)
-				.getIDNumber()
-				.setValue(
-						patientIdentifierMap.get(patientIdentifierMap.keySet()
-								.iterator().next()));
-		pid.getPatientIdentifierList(0).getIdentifierTypeCode()
-				.setValue(RHEAHL7Constants.IDENTIFIER_TYPE_CODE);
-		pid.getPatientName(0).getFamilyName().getSurname()
-				.setValue(patient.getFamilyName());
-
-		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
-		Date dob = patient.getBirthdate();
-		Date dod = patient.getDeathDate();
-		String dobStr = "";
-		String dodStr = "";
-		if (dob != null)
-			dobStr = df.format(dob);
-		if (dod != null)
-			dodStr = df.format(dod);
-
-		// Address
-		pid.getPatientAddress(0).getStreetAddress().getStreetOrMailingAddress()
-				.setValue(patient.getPersonAddress().getAddress1());
-		pid.getPatientAddress(0).getOtherDesignation()
-				.setValue(patient.getPersonAddress().getAddress2());
-		pid.getPatientAddress(0).getCity()
-				.setValue(patient.getPersonAddress().getCityVillage());
-		pid.getPatientAddress(0).getStateOrProvince()
-				.setValue(patient.getPersonAddress().getStateProvince());
-		pid.getPatientAddress(0).getZipOrPostalCode()
-				.setValue(patient.getPersonAddress().getPostalCode());
-
-		// gender
-		pid.getAdministrativeSex().setValue(patient.getGender());
-
-		// dob
-		pid.getDateTimeOfBirth().getTime().setValue(dobStr);
-
-		// Death
-		pid.getPatientDeathIndicator().setValue(patient.getDead().toString());
-		pid.getPatientDeathDateAndTime().getTime().setValue(dodStr);
+	
+	protected void mapToPID(PID pid, Patient patient) throws DataTypeException, HL7Exception {
+		this.mapperPid.mapToPID(pid, patient);
 	}
 
 	protected void mapToPV1(PV1 pv1, List<Encounter> encounterList)
