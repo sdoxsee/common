@@ -15,47 +15,33 @@ package org.openmrs.module.RHEASHRadapter.util;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.velocity.exception.ParseErrorException;
-import org.openmrs.BaseOpenmrsData;
 import org.openmrs.Cohort;
 import org.openmrs.Concept;
 import org.openmrs.ConceptDatatype;
 import org.openmrs.ConceptMap;
 import org.openmrs.ConceptNumeric;
+import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
-import org.openmrs.PatientIdentifier;
 import org.openmrs.PersonAddress;
-import org.openmrs.PersonAttribute;
-import org.openmrs.api.APIException;
 import org.openmrs.api.ConceptService;
-import org.openmrs.api.PersonService;
-import org.openmrs.hl7.HL7Constants;
-import org.openmrs.hl7.HL7InQueue;
-import org.openmrs.hl7.HL7Source;
-
-import org.openmrs.Encounter;
 import org.openmrs.api.context.Context;
-import org.openmrs.api.EncounterService;
 
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.DataTypeException;
-import ca.uhn.hl7v2.model.Message;
 import ca.uhn.hl7v2.model.v25.datatype.CE;
 import ca.uhn.hl7v2.model.v25.datatype.NM;
 import ca.uhn.hl7v2.model.v25.datatype.ST;
 import ca.uhn.hl7v2.model.v25.datatype.TS;
+import ca.uhn.hl7v2.model.v25.group.ORU_R01_PATIENT;
 import ca.uhn.hl7v2.model.v25.message.ORU_R01;
 import ca.uhn.hl7v2.model.v25.segment.MSH;
 import ca.uhn.hl7v2.model.v25.segment.NK1;
@@ -64,121 +50,197 @@ import ca.uhn.hl7v2.model.v25.segment.OBX;
 import ca.uhn.hl7v2.model.v25.segment.ORC;
 import ca.uhn.hl7v2.model.v25.segment.PID;
 import ca.uhn.hl7v2.model.v25.segment.PV1;
-import ca.uhn.hl7v2.parser.GenericParser;
-import ca.uhn.hl7v2.parser.Parser;
 import ca.uhn.hl7v2.parser.PipeParser;
-import ca.uhn.hl7v2.validation.impl.DefaultValidation;
 
 public class GenerateORU_R01 implements Serializable {
 	
 	private Log log = LogFactory.getLog(this.getClass());
-	
 	private static final long serialVersionUID = 1L;
-	private static Integer obxCount;
 	
-	private ORU_R01 r01 = new ORU_R01();
+	private ConceptService conceptService;
+
+	public GenerateORU_R01() {
+		this(Context.getConceptService());
+	}
 	
-	public ORU_R01 generateORU_R01Message(Patient pat, List<Encounter> encounterList) throws Exception {
-		
-		MSH msh = r01.getMSH();
-		
-		// Get current date
-		String dateFormat = "yyyyMMddHHmmss";
-		SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
-		String formattedDate = formatter.format(new Date());
-		
-			msh.getFieldSeparator().setValue(RHEAHL7Constants.FIELD_SEPARATOR);//
-			msh.getEncodingCharacters().setValue(RHEAHL7Constants.ENCODING_CHARACTERS);//
-			msh.getVersionID().getInternationalizationCode().getIdentifier().setValue(
-			    RHEAHL7Constants.INTERNATIONALIZATION_CODE);//
-			msh.getVersionID().getVersionID().setValue(RHEAHL7Constants.VERSION);//
-			msh.getDateTimeOfMessage().getTime().setValue(formattedDate);//
-			msh.getSendingApplication().getNamespaceID().setValue(RHEAHL7Constants.SENDING_APPLICATION);
-			msh.getSendingFacility().getNamespaceID().setValue(RHEAHL7Constants.SENDING_FACILITY);//
-			msh.getMessageType().getMessageCode().setValue(RHEAHL7Constants.MESSAGE_TYPE);//
-			msh.getMessageType().getTriggerEvent().setValue(RHEAHL7Constants.TRIGGER_EVENT);//
-			msh.getMessageType().getMessageStructure().setValue(RHEAHL7Constants.MESSAGE_STRUCTURE);//
-			msh.getReceivingApplication().getNamespaceID().setValue(RHEAHL7Constants.RECEIVING_APPLICATION);
-			msh.getReceivingFacility().getNamespaceID().setValue(RHEAHL7Constants.RECEIVING_FACILITY);//
-			msh.getProcessingID().getProcessingID().setValue(RHEAHL7Constants.PROCESSING_ID);//
-			msh.getProcessingID().getProcessingMode().setValue(RHEAHL7Constants.PROCESSING_MODE);//
-			msh.getMessageControlID().setValue(UUID.randomUUID().toString());//
-			
-			msh.getAcceptAcknowledgmentType().setValue(RHEAHL7Constants.ACK_TYPE);
-			msh.getApplicationAcknowledgmentType().setValue(RHEAHL7Constants.APPLICATION_ACK_TYPE);
-		
-		Cohort singlePatientCohort = new Cohort();
-		singlePatientCohort.addMember(pat.getId());
-		
-		Map<Integer, String> patientIdentifierMap = Context.getPatientSetService().getPatientIdentifierStringsByType(
-		    singlePatientCohort,
-		    Context.getPatientService().getPatientIdentifierTypeByName(RHEAHL7Constants.IDENTIFIER_TYPE));
-		
-		PID pid = r01.getPATIENT_RESULT().getPATIENT().getPID();
-		
-			pid.getSetIDPID().setValue(RHEAHL7Constants.IDPID);
-			pid.getPatientIdentifierList(0).getIDNumber().setValue(
-			    patientIdentifierMap.get(patientIdentifierMap.keySet().iterator().next()));
-			pid.getPatientIdentifierList(0).getIdentifierTypeCode().setValue(RHEAHL7Constants.IDENTIFIER_TYPE_CODE);
-			pid.getPatientName(0).getFamilyName().getSurname().setValue(pat.getFamilyName());
-			
-			SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
-			Date dob = pat.getBirthdate();
-			Date dod = pat.getDeathDate();
-			String dobStr = "";
-			String dodStr = "";
-			if (dob != null)
-				dobStr = df.format(dob);
-			if (dod != null)
-				dodStr = df.format(dod);
-			
-			// Address
-			pid.getPatientAddress(0).getStreetAddress().getStreetOrMailingAddress().setValue(
-			    pat.getPersonAddress().getAddress1());
-			pid.getPatientAddress(0).getOtherDesignation().setValue(pat.getPersonAddress().getAddress2());
-			pid.getPatientAddress(0).getCity().setValue(pat.getPersonAddress().getCityVillage());
-			pid.getPatientAddress(0).getStateOrProvince().setValue(pat.getPersonAddress().getStateProvince());
-			pid.getPatientAddress(0).getZipOrPostalCode().setValue(pat.getPersonAddress().getPostalCode());
-			
-			// gender
-			pid.getAdministrativeSex().setValue(pat.getGender());
-			
-			// dob
-			pid.getDateTimeOfBirth().getTime().setValue(dobStr);
-			
-			// Death
-			pid.getPatientDeathIndicator().setValue(pat.getDead().toString());
-			pid.getPatientDeathDateAndTime().getTime().setValue(dodStr);
-			
-		
-		PV1 pv1 = r01.getPATIENT_RESULT().getPATIENT().getVISIT().getPV1();
+	public GenerateORU_R01(ConceptService conceptService) {
+		this.conceptService = conceptService;
+	}
 	
-			pv1.getSetIDPV1().setValue(RHEAHL7Constants.IDPV1);
-			pv1.getPatientClass().setValue(RHEAHL7Constants.PATIENT_CLASS);
-			pv1.getAssignedPatientLocation().getFacility().getNamespaceID().setValue(
-			    encounterList.get(0).getLocation().getDescription());
-			if(encounterList.get(0).getProvider().getId() != null)
-			pv1.getAttendingDoctor(0).getIDNumber().setValue(encounterList.get(0).getProvider().getId().toString());
-			
-			pv1.getAttendingDoctor(0).getFamilyName().getSurname().setValue(encounterList.get(0).getProvider().getFamilyName());
-			pv1.getAttendingDoctor(0).getGivenName().setValue(encounterList.get(0).getProvider().getGivenName());
-			pv1.getVisitNumber().getIDNumber().setValue(encounterList.get(0).getEncounterId().toString());
-			pv1.getAdmitDateTime().getTime().setValue(
-			    new SimpleDateFormat("yyyyMMddhhmm").format(encounterList.get(0).getDateCreated()));
-			
+	public ORU_R01 generateORU_R01Message(Patient patient, List<Encounter> encounterList) throws Exception {
+		ORU_R01 message = new ORU_R01();
 		
-		// / NK1
+		mapToMSH(message.getMSH());
+
+		ORU_R01_PATIENT oru_R01_PATIENT = message.getPATIENT_RESULT().getPATIENT();
 		
-		NK1 nk1 = r01.getPATIENT_RESULT().getPATIENT().getNK1();
+		mapToPID(oru_R01_PATIENT.getPID(), patient);
+		mapToPV1(oru_R01_PATIENT.getVISIT().getPV1(), encounterList);
+		mapToNK1(oru_R01_PATIENT.getNK1(), patient);
+		// populate ORC segments
+		mapToORCs(message, encounterList);
+		// populate OBR segments
+		mapToOBRs(message, encounterList);
+		// populate OBX segments
+		mapToOBXs(message, encounterList);
+		
+		return message;
+	}
 	
+	private void mapToOBXs(ORU_R01 message, List<Encounter> encounterList) throws HL7Exception,
+			DataTypeException {
+		int orderIndex = 0;
+		for(Encounter e : encounterList) {
+			int obxIndex = 0;
+			for (Obs observation : e.getAllObs()) {
+				if (hasMapping(observation)) {
+					log.info("Obs has a mapping for concept...");
+					
+					// for each observation
+					OBX obx = message.getPATIENT_RESULT().getORDER_OBSERVATION(orderIndex).getOBSERVATION(obxIndex).getOBX();
+					mapToOBX(obx, observation);
+					obx.getSetIDOBX().setValue(obxIndex + "");
+					
+					ConceptDatatype datatype = observation.getConcept().getDatatype();
+					// if numeric value
+					if (isNumeric(obx, datatype)) {
+						mapToNumericObx(obx, observation);
+					} else if (isDateOrDatetime(datatype)) {
+						mapToDateOrDatetimeObx(obx, observation);
+					} else if (isText(datatype)) {
+						mapToTextObx(obx, observation);
+					} else if (isCoded(datatype)) {
+						mapToCodedObx(obx, observation);
+					}
+					obxIndex++;
+				}
+			}
+			
+			orderIndex++;
+		}
+	}
+
+	private boolean hasMapping(Obs observation) {
+		Collection<ConceptMap> conceptMappings = observation.getConcept().getConceptMappings();
+		boolean mapping = false;
+		for (ConceptMap conceptMap : conceptMappings) {
+			if (conceptMap.getSource().getHl7Code().equals(RHEAHL7Constants.RW_CS)) {
+				mapping = true;
+			}
+		}
+		return mapping;
+	}
+	
+	private boolean isCoded(ConceptDatatype datatype) {
+		return datatype.equals(conceptService.getConceptDatatypeByName(RHEAHL7Constants.CONCEPT_DATATYPE_CODED));
+	}
+	private boolean isText(ConceptDatatype datatype) {
+		return datatype.equals(conceptService.getConceptDatatypeByName(RHEAHL7Constants.CONCEPT_DATATYPE_TEXT));
+	}
+	private boolean isDateOrDatetime(ConceptDatatype datatype) {
+		return datatype.equals(conceptService.getConceptDatatypeByName(RHEAHL7Constants.CONCEPT_DATATYPE_DATETIME))
+		        || datatype.equals(conceptService.getConceptDatatypeByName(RHEAHL7Constants.CONCEPT_DATATYPE_DATE));
+	}
+	private boolean isNumeric(OBX obx, ConceptDatatype datatype) {
+		return datatype.equals(conceptService.getConceptDatatypeByName(RHEAHL7Constants.CONCEPT_DATATYPE_NUMERIC));
+	}
+
+	private void mapToCodedObx(OBX obx, Obs observation) throws HL7Exception,
+			DataTypeException {
+		
+		obx.getValueType().setValue(RHEAHL7Constants.VALUE_TYPE_CE);
+		
+		CE ce = new CE(obx.getMessage());
+		Concept concept = observation.getValueCoded();
+		
+		Collection<ConceptMap> conceptValueMappings = concept.getConceptMappings();
+		
+		for (ConceptMap conceptMap : conceptValueMappings) {
+			if (conceptMap.getSource().getHl7Code().equals(RHEAHL7Constants.RW_CN)) {
+				ce.getText().setValue(conceptMap.getSourceCode());
+			}
+			if (conceptMap.getSource().getHl7Code().equals("RW_AC")) {
+				ce.getIdentifier().setValue(conceptMap.getSourceCode());
+			}
+			if (conceptMap.getSource().getHl7Code().equals("RW_AS")) {
+				ce.getNameOfCodingSystem().setValue(conceptMap.getSourceCode());
+			}
+		}
+		
+		if (ce.getText().getValue() == null || ce.getText().getValue().equals("")) {
+			String nameStr = concept.getName().toString();
+			ce.getText().setValue(nameStr);
+		}
+		
+		obx.getObservationValue(0).setData(ce);
+		
+		TS ts = new TS(obx.getMessage());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		ts.getTime().setValue(sdf.format(observation.getDateCreated()));
+		obx.getDateTimeOfTheObservation().getTime().setValue(ts.toString());
+	}
+
+	private void mapToTextObx(OBX obx, Obs observation) throws HL7Exception,
+			DataTypeException {
+		
+		obx.getValueType().setValue(RHEAHL7Constants.VALUE_TYPE_ST);
+		ST st = new ST(obx.getMessage());
+		st.setValue(observation.getValueText());
+		obx.getObservationValue(0).setData(st);
+		
+		TS ts = new TS(obx.getMessage());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		ts.getTime().setValue(sdf.format(observation.getDateCreated()));
+		obx.getDateTimeOfTheObservation().getTime().setValue(ts.toString());
+	}
+
+	private void mapToDateOrDatetimeObx(OBX obx, Obs obs) throws HL7Exception,
+			DataTypeException {
+		
+		obx.getValueType().setValue(RHEAHL7Constants.VALUE_TYPE_TS);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		TS ts = new TS(obx.getMessage());
+		ts.getTime().setValue(sdf.format(obs.getValueDatetime()));
+		obx.getObservationValue(0).setData(ts);
+		
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddHHmmss");
+		ts.getTime().setValue(sdf1.format(obs.getDateCreated()));
+		obx.getDateTimeOfTheObservation().getTime().setValue(ts.toString());
+	}
+
+	private void mapToNumericObx(OBX obx, Obs observation)
+			throws HL7Exception, DataTypeException {
+		obx.getValueType().setValue(RHEAHL7Constants.VALUE_TYPE_NM);
+		
+		NM nm = new NM(obx.getMessage());
+		nm.setValue(observation.getValueNumeric() + "");
+		
+		Concept concept = observation.getConcept();
+		if (concept.isNumeric()) {
+			ConceptNumeric conceptNumeric = this.conceptService.getConceptNumeric(concept.getId());
+			if (conceptNumeric.getUnits() != null && !conceptNumeric.getUnits().equals("")) {
+				obx.getUnits().getIdentifier().setValue(conceptNumeric.getUnits());
+				obx.getUnits().getNameOfCodingSystem().setValue(RHEAHL7Constants.UNIT_CODING_SYSTEM);
+			}
+		}
+		obx.getObservationValue(0).setData(nm);
+		TS ts = new TS(obx.getMessage());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		ts.getTime().setValue(sdf.format(observation.getDateCreated()));
+		obx.getDateTimeOfTheObservation().getTime().setValue(ts.toString());
+	}
+
+	private void mapToNK1(NK1 nk1, Patient patient) throws DataTypeException,
+			HL7Exception {
+		
 			String ln = "";
 			String fn = "";
 			
-			if(pat.getAttribute(RHEAHL7Constants.ATTR_NEXT_OF_KIN) != null) {
-			String nkName = pat.getAttribute(RHEAHL7Constants.ATTR_NEXT_OF_KIN).getValue();
+			if(patient.getAttribute(RHEAHL7Constants.ATTR_NEXT_OF_KIN) != null) {
+			String nkName = patient.getAttribute(RHEAHL7Constants.ATTR_NEXT_OF_KIN).getValue();
 			
-			if ((pat != null) && (pat.getAttribute(RHEAHL7Constants.ATTR_TELEPHONE_NUMBER) != null)) {
-				String tel = pat.getAttribute(RHEAHL7Constants.ATTR_TELEPHONE_NUMBER).getValue();
+			if ((patient != null) && (patient.getAttribute(RHEAHL7Constants.ATTR_TELEPHONE_NUMBER) != null)) {
+				String tel = patient.getAttribute(RHEAHL7Constants.ATTR_TELEPHONE_NUMBER).getValue();
 				nk1.getPhoneNumber(0).getTelephoneNumber().setValue(tel);
 			}
 			if ((nkName != null) && !nkName.equals("")) {
@@ -199,8 +261,8 @@ public class GenerateORU_R01 implements Serializable {
 			nk1.getRelationship().getIdentifier().setValue(RHEAHL7Constants.ATTR_NEXT_OF_KIN);
 			}
 			
-			if (pat != null) {
-				PersonAddress pa = pat.getPersonAddress();
+			if (patient != null) {
+				PersonAddress pa = patient.getPersonAddress();
 				nk1.getAddress(0).getStreetAddress().getStreetOrMailingAddress().setValue(pa.getAddress1());
 				nk1.getAddress(0).getStreetAddress().getDwellingNumber().setValue(pa.getAddress2());
 				nk1.getAddress(0).getCity().setValue(pa.getCityVillage());
@@ -208,138 +270,96 @@ public class GenerateORU_R01 implements Serializable {
 				nk1.getAddress(0).getZipOrPostalCode().setValue(pa.getPostalCode());
 				nk1.getAddress(0).getCountry().setValue(pa.getCountry());
 			}
-		
-		// populate ORC segments
-		
-		createORCs(r01,encounterList);
-		
-		// populate OBR segments
-		
-		createOBRs(r01,encounterList);
-		
-		// populate OBX segments
-		
-		ConceptService cs = Context.getConceptService();
-		
-		int counter = 0;
-		for(Encounter e : encounterList){
-			
-			Set<Obs> s = new HashSet<Obs>();
-			s = e.getAllObs();
-		
-			 obxCount = 0;
-		for (Obs obs : s) {
-			 
-			// set datatype
-			ConceptDatatype datatype = obs.getConcept().getDatatype();
-			
-			Collection<ConceptMap> conceptMappings = obs.getConcept().getConceptMappings();
-			
-			boolean hasMapping = false;
-			for (ConceptMap conceptMap : conceptMappings) {
-				if (conceptMap.getSource().getHl7Code().equals(RHEAHL7Constants.RW_CS)) {
-					hasMapping = true;
-				}
-			}
-			
-			if (hasMapping) {
-				log.info("Obs has a mapping for concept...");
-			
-					// if numeric value
-					if (datatype.equals(cs.getConceptDatatypeByName(RHEAHL7Constants.CONCEPT_DATATYPE_NUMERIC))) {
-
-						OBX obx = createOBX(r01, obs, counter);
-						obx.getValueType().setValue(RHEAHL7Constants.VALUE_TYPE_NM);
-						
-						NM nm = new NM(r01);
-						nm.setValue(obs.getValueNumeric() + "");
-						
-						Concept concept = obs.getConcept();
-						if (concept.isNumeric()) {
-							ConceptNumeric conceptNumeric = cs.getConceptNumeric(concept.getId());
-							if (conceptNumeric.getUnits() != null && !conceptNumeric.getUnits().equals("")) {
-								obx.getUnits().getIdentifier().setValue(conceptNumeric.getUnits());
-								obx.getUnits().getNameOfCodingSystem().setValue(RHEAHL7Constants.UNIT_CODING_SYSTEM);
-							}
-						}
-						obx.getObservationValue(0).setData(nm);
-						TS ts = new TS(r01);
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-						ts.getTime().setValue(sdf.format(obs.getDateCreated()));
-						obx.getDateTimeOfTheObservation().getTime().setValue(ts.toString());
-						
-					} else if (datatype.equals(cs.getConceptDatatypeByName(RHEAHL7Constants.CONCEPT_DATATYPE_DATETIME))
-					        || datatype.equals(cs.getConceptDatatypeByName(RHEAHL7Constants.CONCEPT_DATATYPE_DATE))) {
-
-						OBX obx = createOBX(r01, obs, counter);
-						
-						obx.getValueType().setValue(RHEAHL7Constants.VALUE_TYPE_TS);
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-						TS ts = new TS(r01);
-						ts.getTime().setValue(sdf.format(obs.getValueDatetime()));
-						obx.getObservationValue(0).setData(ts);
-						
-						SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddHHmmss");
-						ts.getTime().setValue(sdf1.format(obs.getDateCreated()));
-						obx.getDateTimeOfTheObservation().getTime().setValue(ts.toString());
-						
-					} else if (datatype.equals(cs.getConceptDatatypeByName(RHEAHL7Constants.CONCEPT_DATATYPE_TEXT))) {
-
-						OBX obx = createOBX(r01, obs, counter);
-						
-						obx.getValueType().setValue(RHEAHL7Constants.VALUE_TYPE_ST);
-						ST st = new ST(r01);
-						st.setValue(obs.getValueText());
-						obx.getObservationValue(0).setData(st);
-						
-						TS ts = new TS(r01);
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-						ts.getTime().setValue(sdf.format(obs.getDateCreated()));
-						obx.getDateTimeOfTheObservation().getTime().setValue(ts.toString());
-						
-					} else if (datatype.equals(cs.getConceptDatatypeByName(RHEAHL7Constants.CONCEPT_DATATYPE_CODED))) {
-
-						OBX obx = createOBX(r01, obs, counter);
-						
-						obx.getValueType().setValue(RHEAHL7Constants.VALUE_TYPE_CE);
-						
-						CE ce = new CE(r01);
-						Concept concept = obs.getValueCoded();
-						
-						Collection<ConceptMap> conceptValueMappings = concept.getConceptMappings();
-						
-						for (ConceptMap conceptMap : conceptValueMappings) {
-							if (conceptMap.getSource().getHl7Code().equals(RHEAHL7Constants.RW_CN)) {
-								ce.getText().setValue(conceptMap.getSourceCode());
-							}
-							if (conceptMap.getSource().getHl7Code().equals("RW_AC")) {
-								ce.getIdentifier().setValue(conceptMap.getSourceCode());
-							}
-							if (conceptMap.getSource().getHl7Code().equals("RW_AS")) {
-								ce.getNameOfCodingSystem().setValue(conceptMap.getSourceCode());
-							}
-						}
-						
-						if (ce.getText().getValue() == null || ce.getText().getValue().equals("")) {
-							String nameStr = concept.getName().toString();
-							ce.getText().setValue(nameStr);
-						}
-						
-						obx.getObservationValue(0).setData(ce);
-						
-						TS ts = new TS(r01);
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-						ts.getTime().setValue(sdf.format(obs.getDateCreated()));
-						obx.getDateTimeOfTheObservation().getTime().setValue(ts.toString());
-					}
-					
-			}
-		}
-		
-		counter++;
 	}
+
+	private void mapToPV1(PV1 pv1, List<Encounter> encounterList)
+			throws DataTypeException, HL7Exception {
+			pv1.getSetIDPV1().setValue(RHEAHL7Constants.IDPV1);
+			pv1.getPatientClass().setValue(RHEAHL7Constants.PATIENT_CLASS);
+			pv1.getAssignedPatientLocation().getFacility().getNamespaceID().setValue(
+			    encounterList.get(0).getLocation().getDescription());
+			if(encounterList.get(0).getProvider().getId() != null)
+			pv1.getAttendingDoctor(0).getIDNumber().setValue(encounterList.get(0).getProvider().getId().toString());
+			
+			pv1.getAttendingDoctor(0).getFamilyName().getSurname().setValue(encounterList.get(0).getProvider().getFamilyName());
+			pv1.getAttendingDoctor(0).getGivenName().setValue(encounterList.get(0).getProvider().getGivenName());
+			pv1.getVisitNumber().getIDNumber().setValue(encounterList.get(0).getEncounterId().toString());
+			pv1.getAdmitDateTime().getTime().setValue(
+			    new SimpleDateFormat("yyyyMMddhhmm").format(encounterList.get(0).getDateCreated()));
+	}
+
+	private void mapToMSH(MSH msh) throws DataTypeException {
+		msh.getFieldSeparator().setValue(RHEAHL7Constants.FIELD_SEPARATOR);//
+			msh.getEncodingCharacters().setValue(RHEAHL7Constants.ENCODING_CHARACTERS);//
+			msh.getVersionID().getInternationalizationCode().getIdentifier().setValue(
+			    RHEAHL7Constants.INTERNATIONALIZATION_CODE);//
+			msh.getVersionID().getVersionID().setValue(RHEAHL7Constants.VERSION);//
+			msh.getDateTimeOfMessage().getTime().setValue(getCurrentDate());//
+			msh.getSendingApplication().getNamespaceID().setValue(RHEAHL7Constants.SENDING_APPLICATION);
+			msh.getSendingFacility().getNamespaceID().setValue(RHEAHL7Constants.SENDING_FACILITY);//
+			msh.getMessageType().getMessageCode().setValue(RHEAHL7Constants.MESSAGE_TYPE);//
+			msh.getMessageType().getTriggerEvent().setValue(RHEAHL7Constants.TRIGGER_EVENT);//
+			msh.getMessageType().getMessageStructure().setValue(RHEAHL7Constants.MESSAGE_STRUCTURE);//
+			msh.getReceivingApplication().getNamespaceID().setValue(RHEAHL7Constants.RECEIVING_APPLICATION);
+			msh.getReceivingFacility().getNamespaceID().setValue(RHEAHL7Constants.RECEIVING_FACILITY);//
+			msh.getProcessingID().getProcessingID().setValue(RHEAHL7Constants.PROCESSING_ID);//
+			msh.getProcessingID().getProcessingMode().setValue(RHEAHL7Constants.PROCESSING_MODE);//
+			msh.getMessageControlID().setValue(UUID.randomUUID().toString());//
+			
+			msh.getAcceptAcknowledgmentType().setValue(RHEAHL7Constants.ACK_TYPE);
+			msh.getApplicationAcknowledgmentType().setValue(RHEAHL7Constants.APPLICATION_ACK_TYPE);
+	}
+
+	private void mapToPID(PID pid, Patient patient) throws DataTypeException,
+			HL7Exception {
+		Cohort singlePatientCohort = new Cohort();
+		singlePatientCohort.addMember(patient.getId());
 		
-		return r01;
+		Map<Integer, String> patientIdentifierMap = Context.getPatientSetService().getPatientIdentifierStringsByType(
+		    singlePatientCohort,
+		    Context.getPatientService().getPatientIdentifierTypeByName(RHEAHL7Constants.IDENTIFIER_TYPE));
+		
+			pid.getSetIDPID().setValue(RHEAHL7Constants.IDPID);
+			pid.getPatientIdentifierList(0).getIDNumber().setValue(
+			    patientIdentifierMap.get(patientIdentifierMap.keySet().iterator().next()));
+			pid.getPatientIdentifierList(0).getIdentifierTypeCode().setValue(RHEAHL7Constants.IDENTIFIER_TYPE_CODE);
+			pid.getPatientName(0).getFamilyName().getSurname().setValue(patient.getFamilyName());
+			
+			SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+			Date dob = patient.getBirthdate();
+			Date dod = patient.getDeathDate();
+			String dobStr = "";
+			String dodStr = "";
+			if (dob != null)
+				dobStr = df.format(dob);
+			if (dod != null)
+				dodStr = df.format(dod);
+			
+			// Address
+			pid.getPatientAddress(0).getStreetAddress().getStreetOrMailingAddress().setValue(
+			    patient.getPersonAddress().getAddress1());
+			pid.getPatientAddress(0).getOtherDesignation().setValue(patient.getPersonAddress().getAddress2());
+			pid.getPatientAddress(0).getCity().setValue(patient.getPersonAddress().getCityVillage());
+			pid.getPatientAddress(0).getStateOrProvince().setValue(patient.getPersonAddress().getStateProvince());
+			pid.getPatientAddress(0).getZipOrPostalCode().setValue(patient.getPersonAddress().getPostalCode());
+			
+			// gender
+			pid.getAdministrativeSex().setValue(patient.getGender());
+			
+			// dob
+			pid.getDateTimeOfBirth().getTime().setValue(dobStr);
+			
+			// Death
+			pid.getPatientDeathIndicator().setValue(patient.getDead().toString());
+			pid.getPatientDeathDateAndTime().getTime().setValue(dodStr);
+	}
+
+	private String getCurrentDate() {
+		// Get current date
+		String dateFormat = "yyyyMMddHHmmss";
+		SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+		String formattedDate = formatter.format(new Date());
+		return formattedDate;
 	}
 	
 	public String getMessage(ORU_R01 r01) {
@@ -354,52 +374,48 @@ public class GenerateORU_R01 implements Serializable {
 		return msg;
 	}	
 	
-	private static void createORCs(ORU_R01 r01, List<Encounter> encounterList) throws Exception{
+	private static void mapToORCs(ORU_R01 r01, List<Encounter> encounterList) throws Exception{
 		int orderORCCount = 0;
-		
-		for(Encounter e : encounterList){
-		ORC orc = null;
-
-			orc = r01.getPATIENT_RESULT().getORDER_OBSERVATION(orderORCCount).getORC();
-			orc.getPlacerOrderNumber().getNamespaceID().setValue(RHEAHL7Constants.PROVIDER_SENDING_APPLICATION);
-	        orc.getOrderingProvider(0).getFamilyName().getSurname().setValue(e.getProvider().getFamilyName());
-
-	        orc.getOrderingProvider(0).getGivenName().setValue(e.getProvider().getGivenName());
-	        orc.getOrderingProvider(0).getIDNumber().setValue(e.getProvider().getId().toString());
-	        
-	        orc.getOrderControlCodeReason().getIdentifier().setValue("");
-	        
-	        orc.getEnteredBy(0).getFamilyName().getSurname().setValue(e.getCreator().getFamilyName());
-	        orc.getEnteredBy(0).getGivenName().setValue(e.getCreator().getGivenName());
-	        orc.getEnteredBy(0).getIDNumber().setValue(e.getCreator().getId().toString());
-	        
-	        //Cannot input ordering facility information since OpenMRS trunk does not store these
-	        
-	        orc.getEnteringOrganization().getText().setValue(RHEAHL7Constants.ENTERING_ORGANIZATION);
-	        orc.getOrderingFacilityName(0).getOrganizationName().setValue(RHEAHL7Constants.ORDERING_ORGANIZATION);
-	        
-	        //How shall I fill in the Order control reason ? 
-	        //orc.getOrderControlCodeReason();
-
-	        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmm");
-	        String dateStr = "";
-	        Date d = new Date();
-	        dateStr = df.format(d);
-	        
-	        orc.getDateTimeOfTransaction().getTime().setValue(dateStr);
-		
-		orderORCCount++;
-		
+		for(Encounter encounter : encounterList){
+			mapToORC(r01.getPATIENT_RESULT().getORDER_OBSERVATION(orderORCCount).getORC(), encounter);
+			orderORCCount++;
 		}
 	}
-	
-	private static void createOBRs(ORU_R01 r01, List<Encounter> encounterList) throws Exception{
+
+	private static void mapToORC(ORC orc, Encounter encounter)
+			throws DataTypeException, HL7Exception {
+		orc.getPlacerOrderNumber().getNamespaceID().setValue(RHEAHL7Constants.PROVIDER_SENDING_APPLICATION);
+		orc.getOrderingProvider(0).getFamilyName().getSurname().setValue(encounter.getProvider().getFamilyName());
+
+		orc.getOrderingProvider(0).getGivenName().setValue(encounter.getProvider().getGivenName());
+		orc.getOrderingProvider(0).getIDNumber().setValue(encounter.getProvider().getId().toString());
 		
-		int orderObsCount = 0;
-		for(Encounter e : encounterList){
-		OBR obr = null;
+		orc.getOrderControlCodeReason().getIdentifier().setValue("");
+		
+		orc.getEnteredBy(0).getFamilyName().getSurname().setValue(encounter.getCreator().getFamilyName());
+		orc.getEnteredBy(0).getGivenName().setValue(encounter.getCreator().getGivenName());
+		orc.getEnteredBy(0).getIDNumber().setValue(encounter.getCreator().getId().toString());
+		
+		//Cannot input ordering facility information since OpenMRS trunk does not store these
+		
+		orc.getEnteringOrganization().getText().setValue(RHEAHL7Constants.ENTERING_ORGANIZATION);
+		orc.getOrderingFacilityName(0).getOrganizationName().setValue(RHEAHL7Constants.ORDERING_ORGANIZATION);
+		
+		//How shall I fill in the Order control reason ? 
+		//orc.getOrderControlCodeReason();
+
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmm");
+		String dateStr = "";
+		Date d = new Date();
+		dateStr = df.format(d);
+		
+		orc.getDateTimeOfTransaction().getTime().setValue(dateStr);
+	}
 	
-			obr = r01.getPATIENT_RESULT().getORDER_OBSERVATION(orderObsCount).getOBR();
+	private static void mapToOBRs(ORU_R01 r01, List<Encounter> encounterList) throws Exception{
+		int orderObsCount = 0;
+		for(Encounter e : encounterList) {
+			OBR obr = r01.getPATIENT_RESULT().getORDER_OBSERVATION(orderObsCount).getOBR();
 			int reps = r01.getPATIENT_RESULT().getORDER_OBSERVATIONReps();
 			
 			Date encDt = e.getEncounterDatetime();
@@ -430,15 +446,12 @@ public class GenerateORU_R01 implements Serializable {
 			String accessionNumber = String.valueOf(e.getEncounterId()) + "-" + RHEAHL7Constants.UNIV_SERVICE_ID
 			        + "-" + encDateOnly;
 			obr.getFillerOrderNumber().getEntityIdentifier().setValue(accessionNumber);
-			
-		orderObsCount++;
+				
+			orderObsCount++;
 		}
 	}
 	
-	private static OBX createOBX(ORU_R01 r01, Obs obs, int counter) throws HL7Exception, DataTypeException {
-		// for each obs
-		OBX obx = r01.getPATIENT_RESULT().getORDER_OBSERVATION(counter).getOBSERVATION(obxCount).getOBX();
-		obx.getSetIDOBX().setValue(obxCount + "");
+	private void mapToOBX(OBX obx, Obs obs) throws HL7Exception, DataTypeException {
 		
 		Collection<ConceptMap> conceptMappings = obs.getConcept().getConceptMappings();
 		
@@ -456,10 +469,6 @@ public class GenerateORU_R01 implements Serializable {
 			obx.getObservationIdentifier().getText().setValue(obs.getConcept().getName().toString());
 		}
 		obx.getObservationIdentifier().getNameOfCodingSystem().setValue(RHEAHL7Constants.NAME_OF_CODING_SYSTEM);
-		
-		obxCount++;
-			
-		return obx;
 	}
 	
 }
