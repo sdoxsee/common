@@ -8,13 +8,15 @@
 package org.openmrs.module.hl7output.custommodel.v25.message;
 
 import org.openmrs.module.hl7output.custommodel.v25.group.*;
+import org.openmrs.module.hl7output.custommodel.v25.helper.AbstractMessage;
 import org.openmrs.module.hl7output.custommodel.v25.segment.*;
 
 import ca.uhn.log.HapiLogFactory;
 import ca.uhn.hl7v2.HL7Exception;
+import ca.uhn.hl7v2.model.AbstractSegment;
 import ca.uhn.hl7v2.parser.ModelClassFactory;
 import ca.uhn.hl7v2.parser.DefaultModelClassFactory;
-import ca.uhn.hl7v2.model.AbstractMessage;
+//import ca.uhn.hl7v2.model.AbstractMessage;
 
 /**
  * <p>Represents a ZPT_ZP1 message structure (see chapter ). This structure contains the 
@@ -107,10 +109,10 @@ public class ZPT_ZP1 extends AbstractMessage  {
      * Returns
      * EVN (Event Type) - creates it if necessary
      */
-    public EVN getEVN() { 
-       EVN ret = null;
+    public AbstractSegment getEVN() { 
+       AbstractSegment ret = null;
        try {
-          ret = (EVN)this.get("EVN");
+          ret = (AbstractSegment)this.get("EVN");
        } catch(HL7Exception e) {
           HapiLogFactory.getHapiLog(this.getClass()).error("Unexpected error accessing data - this is probably a bug in the source code generator.", e);
           throw new RuntimeException(e);

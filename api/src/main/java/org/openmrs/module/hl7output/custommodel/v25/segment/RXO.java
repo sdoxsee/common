@@ -8,6 +8,8 @@
 package org.openmrs.module.hl7output.custommodel.v25.segment;
 
 // import org.openmrs.module.hl7output.custommodel.v25.group.*;
+import org.openmrs.module.hl7output.custommodel.v25.helper.AbstractSegment;
+
 import ca.uhn.hl7v2.model.v25.datatype.*;
 import ca.uhn.log.HapiLogFactory;
 import ca.uhn.hl7v2.HL7Exception;
@@ -16,7 +18,7 @@ import ca.uhn.hl7v2.parser.DefaultModelClassFactory;
 import ca.uhn.hl7v2.model.AbstractMessage;
 import ca.uhn.hl7v2.model.Group;
 import ca.uhn.hl7v2.model.Type;
-import ca.uhn.hl7v2.model.AbstractSegment;
+//import ca.uhn.hl7v2.model.AbstractSegment;
 import ca.uhn.hl7v2.model.Varies;
 
 /**
