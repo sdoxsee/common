@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/824/SHRADAP/trunk/RHEA_SHR_Adapter/omod/src/test/resources
+END
+TestingApplicationContext.xml
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/824/SHRADAP/trunk/RHEA_SHR_Adapter/omod/src/test/resources/TestingApplicationContext.xml
+END
+test-hibernate.cfg.xml
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/824/SHRADAP/trunk/RHEA_SHR_Adapter/omod/src/test/resources/test-hibernate.cfg.xml
+END
+RHEAControllerTest-initialData.xml
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/824/SHRADAP/trunk/RHEA_SHR_Adapter/omod/src/test/resources/RHEAControllerTest-initialData.xml
+END

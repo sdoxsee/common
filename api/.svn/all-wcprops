@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/830/SHRADAP/trunk/RHEA_SHR_Adapter/api
+END
+pom.xml
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/824/SHRADAP/trunk/RHEA_SHR_Adapter/api/pom.xml
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/824/SHRADAP/trunk/RHEA_SHR_Adapter/api/.classpath
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/824/SHRADAP/trunk/RHEA_SHR_Adapter/api/.project
+END
