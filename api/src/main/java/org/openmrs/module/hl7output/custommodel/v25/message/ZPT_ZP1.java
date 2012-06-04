@@ -208,31 +208,31 @@ public class ZPT_ZP1 extends AbstractMessage  {
         return reps; 
     } 
 
-//    /**
-//     * Inserts a specific repetition of ENCOUNTER (ENCOUNTER)
-//     * @see AbstractGroup\#insertRepetition(Structure, int) 
-//     */
-//    public void insertENCOUNTER(ZPT_ZP1_ENCOUNTER structure, int rep) throws HL7Exception { 
-//       super.insertRepetition( "ENCOUNTER", structure, rep);
-//    }
-//
-//
-//    /**
-//     * Inserts a specific repetition of ENCOUNTER (ENCOUNTER)
-//     * @see AbstractGroup\#insertRepetition(Structure, int) 
-//     */
-//    public ZPT_ZP1_ENCOUNTER insertENCOUNTER(int rep) throws HL7Exception { 
-//       return (ZPT_ZP1_ENCOUNTER)super.insertRepetition("ENCOUNTER", rep);
-//    }
-//
-//
-//    /**
-//     * Removes a specific repetition of ENCOUNTER (ENCOUNTER)
-//     * @see AbstractGroup\#removeRepetition(String, int) 
-//     */
-//    public ZPT_ZP1_ENCOUNTER removeENCOUNTER(int rep) throws HL7Exception { 
-//       return (ZPT_ZP1_ENCOUNTER)super.removeRepetition("ENCOUNTER", rep);
-//    }
+    /**
+     * Inserts a specific repetition of ENCOUNTER (ENCOUNTER)
+     * @see AbstractGroup\#insertRepetition(Structure, int) 
+     */
+    public void insertENCOUNTER(ZPT_ZP1_ENCOUNTER structure, int rep) throws HL7Exception { 
+       super.insertRepetition( "ENCOUNTER", structure, rep);
+    }
+
+
+    /**
+     * Inserts a specific repetition of ENCOUNTER (ENCOUNTER)
+     * @see AbstractGroup\#insertRepetition(Structure, int) 
+     */
+    public ZPT_ZP1_ENCOUNTER insertENCOUNTER(int rep) throws HL7Exception { 
+       return (ZPT_ZP1_ENCOUNTER)super.insertRepetition("ENCOUNTER", rep);
+    }
+
+
+    /**
+     * Removes a specific repetition of ENCOUNTER (ENCOUNTER)
+     * @see AbstractGroup\#removeRepetition(String, int) 
+     */
+    public ZPT_ZP1_ENCOUNTER removeENCOUNTER(int rep) throws HL7Exception { 
+       return (ZPT_ZP1_ENCOUNTER)super.removeRepetition("ENCOUNTER", rep);
+    }
 
 
 

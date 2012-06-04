@@ -74,11 +74,6 @@ public class NK1 extends AbstractSegment {
        init(factory);
     }
 
-    private void add(Class c, boolean required, int maxReps, int length,
-    		Object[] constructorArgs, String string) throws HL7Exception {
-    	super.add(c, required, maxReps, length, constructorArgs);
-    }
-    
     private void init(ModelClassFactory factory) {
        try {
                                   this.add(SI.class, true, 1, 4, new Object[]{ getMessage(), new Integer(0) }, "Set ID - NK1");
@@ -273,53 +268,53 @@ public class NK1 extends AbstractSegment {
 
 
 
-//    /**
-//     * Inserts a repetition of
-//     * NK1-2: "Name" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public XPN insertNK1Name(int rep) throws HL7Exception { 
-//        return (XPN) super.insertRepetition(2, rep);
-//    }
-//
-//
-//
-//    /**
-//     * Inserts a repetition of
-//     * NK1-2: "Name" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public XPN insertNk12_Name(int rep) throws HL7Exception { 
-//        return (XPN) super.insertRepetition(2, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * NK1-2: "Name" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public XPN removeNK1Name(int rep) throws HL7Exception { 
-//        return (XPN) super.removeRepetition(2, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * NK1-2: "Name" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public XPN removeNk12_Name(int rep) throws HL7Exception { 
-//        return (XPN) super.removeRepetition(2, rep);
-//    }
+    /**
+     * Inserts a repetition of
+     * NK1-2: "Name" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public XPN insertNK1Name(int rep) throws HL7Exception { 
+        return (XPN) super.insertRepetition(2, rep);
+    }
+
+
+
+    /**
+     * Inserts a repetition of
+     * NK1-2: "Name" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public XPN insertNk12_Name(int rep) throws HL7Exception { 
+        return (XPN) super.insertRepetition(2, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * NK1-2: "Name" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public XPN removeNK1Name(int rep) throws HL7Exception { 
+        return (XPN) super.removeRepetition(2, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * NK1-2: "Name" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public XPN removeNk12_Name(int rep) throws HL7Exception { 
+        return (XPN) super.removeRepetition(2, rep);
+    }
 
 
 

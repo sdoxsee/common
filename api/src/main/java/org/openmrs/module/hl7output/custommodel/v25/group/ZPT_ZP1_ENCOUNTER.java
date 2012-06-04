@@ -129,31 +129,31 @@ public class ZPT_ZP1_ENCOUNTER extends AbstractGroup {
         return reps; 
     } 
 
-//    /**
-//     * Inserts a specific repetition of OBSERVATION (OBSERVATION)
-//     * @see AbstractGroup#insertRepetition(Structure, int) 
-//     */
-//    public void insertOBSERVATION(ZPT_ZP1_OBSERVATION structure, int rep) throws HL7Exception { 
-//       super.insertRepetition("OBSERVATION", structure, rep);
-//    }
-//
-//
-//    /**
-//     * Inserts a specific repetition of OBSERVATION (OBSERVATION)
-//     * @see AbstractGroup#insertRepetition(Structure, int) 
-//     */
-//    public ZPT_ZP1_OBSERVATION insertOBSERVATION(int rep) throws HL7Exception { 
-//       return (ZPT_ZP1_OBSERVATION)super.insertRepetition("OBSERVATION", rep);
-//    }
-//
-//
-//    /**
-//     * Removes a specific repetition of OBSERVATION (OBSERVATION)
-//     * @see AbstractGroup#removeRepetition(String, int) 
-//     */
-//    public ZPT_ZP1_OBSERVATION removeOBSERVATION(int rep) throws HL7Exception { 
-//       return (ZPT_ZP1_OBSERVATION)super.removeRepetition("OBSERVATION", rep);
-//    }
+    /**
+     * Inserts a specific repetition of OBSERVATION (OBSERVATION)
+     * @see AbstractGroup#insertRepetition(Structure, int) 
+     */
+    public void insertOBSERVATION(ZPT_ZP1_OBSERVATION structure, int rep) throws HL7Exception { 
+       super.insertRepetition("OBSERVATION", structure, rep);
+    }
+
+
+    /**
+     * Inserts a specific repetition of OBSERVATION (OBSERVATION)
+     * @see AbstractGroup#insertRepetition(Structure, int) 
+     */
+    public ZPT_ZP1_OBSERVATION insertOBSERVATION(int rep) throws HL7Exception { 
+       return (ZPT_ZP1_OBSERVATION)super.insertRepetition("OBSERVATION", rep);
+    }
+
+
+    /**
+     * Removes a specific repetition of OBSERVATION (OBSERVATION)
+     * @see AbstractGroup#removeRepetition(String, int) 
+     */
+    public ZPT_ZP1_OBSERVATION removeOBSERVATION(int rep) throws HL7Exception { 
+       return (ZPT_ZP1_OBSERVATION)super.removeRepetition("OBSERVATION", rep);
+    }
 
 
 
@@ -208,31 +208,31 @@ public class ZPT_ZP1_ENCOUNTER extends AbstractGroup {
         return reps; 
     } 
 
-//    /**
-//     * Inserts a specific repetition of ORDER (ORDER)
-//     * @see AbstractGroup#insertRepetition(Structure, int) 
-//     */
-//    public void insertORDER(ZPT_ZP1_ORDER structure, int rep) throws HL7Exception { 
-//       super.insertRepetition("ORDER", structure, rep);
-//    }
-//
-//
-//    /**
-//     * Inserts a specific repetition of ORDER (ORDER)
-//     * @see AbstractGroup#insertRepetition(Structure, int) 
-//     */
-//    public ZPT_ZP1_ORDER insertORDER(int rep) throws HL7Exception { 
-//       return (ZPT_ZP1_ORDER)super.insertRepetition("ORDER", rep);
-//    }
-//
-//
-//    /**
-//     * Removes a specific repetition of ORDER (ORDER)
-//     * @see AbstractGroup#removeRepetition(String, int) 
-//     */
-//    public ZPT_ZP1_ORDER removeORDER(int rep) throws HL7Exception { 
-//       return (ZPT_ZP1_ORDER)super.removeRepetition("ORDER", rep);
-//    }
+    /**
+     * Inserts a specific repetition of ORDER (ORDER)
+     * @see AbstractGroup#insertRepetition(Structure, int) 
+     */
+    public void insertORDER(ZPT_ZP1_ORDER structure, int rep) throws HL7Exception { 
+       super.insertRepetition("ORDER", structure, rep);
+    }
+
+
+    /**
+     * Inserts a specific repetition of ORDER (ORDER)
+     * @see AbstractGroup#insertRepetition(Structure, int) 
+     */
+    public ZPT_ZP1_ORDER insertORDER(int rep) throws HL7Exception { 
+       return (ZPT_ZP1_ORDER)super.insertRepetition("ORDER", rep);
+    }
+
+
+    /**
+     * Removes a specific repetition of ORDER (ORDER)
+     * @see AbstractGroup#removeRepetition(String, int) 
+     */
+    public ZPT_ZP1_ORDER removeORDER(int rep) throws HL7Exception { 
+       return (ZPT_ZP1_ORDER)super.removeRepetition("ORDER", rep);
+    }
 
 
 
@@ -287,31 +287,31 @@ public class ZPT_ZP1_ENCOUNTER extends AbstractGroup {
         return reps; 
     } 
 
-//    /**
-//     * Inserts a specific repetition of RXD (Pharmacy/Treatment Dispense)
-//     * @see AbstractGroup#insertRepetition(Structure, int) 
-//     */
-//    public void insertRXD(RXD structure, int rep) throws HL7Exception { 
-//       super.insertRepetition("RXD", structure, rep);
-//    }
-//
-//
-//    /**
-//     * Inserts a specific repetition of RXD (Pharmacy/Treatment Dispense)
-//     * @see AbstractGroup#insertRepetition(Structure, int) 
-//     */
-//    public RXD insertRXD(int rep) throws HL7Exception { 
-//       return (RXD)super.insertRepetition("RXD", rep);
-//    }
-//
-//
-//    /**
-//     * Removes a specific repetition of RXD (Pharmacy/Treatment Dispense)
-//     * @see AbstractGroup#removeRepetition(String, int) 
-//     */
-//    public RXD removeRXD(int rep) throws HL7Exception { 
-//       return (RXD)super.removeRepetition("RXD", rep);
-//    }
+    /**
+     * Inserts a specific repetition of RXD (Pharmacy/Treatment Dispense)
+     * @see AbstractGroup#insertRepetition(Structure, int) 
+     */
+    public void insertRXD(RXD structure, int rep) throws HL7Exception { 
+       super.insertRepetition("RXD", structure, rep);
+    }
+
+
+    /**
+     * Inserts a specific repetition of RXD (Pharmacy/Treatment Dispense)
+     * @see AbstractGroup#insertRepetition(Structure, int) 
+     */
+    public RXD insertRXD(int rep) throws HL7Exception { 
+       return (RXD)super.insertRepetition("RXD", rep);
+    }
+
+
+    /**
+     * Removes a specific repetition of RXD (Pharmacy/Treatment Dispense)
+     * @see AbstractGroup#removeRepetition(String, int) 
+     */
+    public RXD removeRXD(int rep) throws HL7Exception { 
+       return (RXD)super.removeRepetition("RXD", rep);
+    }
 
 
 

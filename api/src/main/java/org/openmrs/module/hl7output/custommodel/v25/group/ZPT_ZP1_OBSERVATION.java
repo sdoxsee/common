@@ -125,31 +125,31 @@ public class ZPT_ZP1_OBSERVATION extends AbstractGroup {
         return reps; 
     } 
 
-//    /**
-//     * Inserts a specific repetition of OBX (Observation/Result)
-//     * @see AbstractGroup#insertRepetition(Structure, int) 
-//     */
-//    public void insertOBX(OBX structure, int rep) throws HL7Exception { 
-//       super.insertRepetition("OBX", structure, rep);
-//    }
-//
-//
-//    /**
-//     * Inserts a specific repetition of OBX (Observation/Result)
-//     * @see AbstractGroup#insertRepetition(Structure, int) 
-//     */
-//    public OBX insertOBX(int rep) throws HL7Exception { 
-//       return (OBX)super.insertRepetition("OBX", rep);
-//    }
-//
-//
-//    /**
-//     * Removes a specific repetition of OBX (Observation/Result)
-//     * @see AbstractGroup#removeRepetition(String, int) 
-//     */
-//    public OBX removeOBX(int rep) throws HL7Exception { 
-//       return (OBX)super.removeRepetition("OBX", rep);
-//    }
+    /**
+     * Inserts a specific repetition of OBX (Observation/Result)
+     * @see AbstractGroup#insertRepetition(Structure, int) 
+     */
+    public void insertOBX(OBX structure, int rep) throws HL7Exception { 
+       super.insertRepetition("OBX", structure, rep);
+    }
+
+
+    /**
+     * Inserts a specific repetition of OBX (Observation/Result)
+     * @see AbstractGroup#insertRepetition(Structure, int) 
+     */
+    public OBX insertOBX(int rep) throws HL7Exception { 
+       return (OBX)super.insertRepetition("OBX", rep);
+    }
+
+
+    /**
+     * Removes a specific repetition of OBX (Observation/Result)
+     * @see AbstractGroup#removeRepetition(String, int) 
+     */
+    public OBX removeOBX(int rep) throws HL7Exception { 
+       return (OBX)super.removeRepetition("OBX", rep);
+    }
 
 
 

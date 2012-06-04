@@ -58,27 +58,27 @@ public class MSH extends AbstractSegment {
 
     private void init(ModelClassFactory factory) {
        try {
-                                  this.add(ST.class, true, 1, 1, new Object[]{ getMessage(), new Integer(0) });//, "Field Separator");
-                                  this.add(ST.class, true, 1, 4, new Object[]{ getMessage(), new Integer(0) });//, "Encoding Characters");
-                                  this.add(HD.class, false, 1, 227, new Object[]{ getMessage(), new Integer(361) });//, "Sending Application");
-                                  this.add(HD.class, false, 1, 227, new Object[]{ getMessage(), new Integer(362) });//, "Sending Facility");
-                                  this.add(HD.class, false, 1, 227, new Object[]{ getMessage(), new Integer(361) });//, "Receiving Application");
-                                  this.add(HD.class, false, 1, 227, new Object[]{ getMessage(), new Integer(362) });//, "Receiving Facility");
-                                  this.add(TS.class, true, 1, 26, new Object[]{ getMessage(), new Integer(0) });//, "Date/Time Of Message");
-                                  this.add(ST.class, false, -1, 40, new Object[]{ getMessage(), new Integer(0) });//, "Security");
-                                  this.add(MSG.class, true, 1, 15, new Object[]{ getMessage(), new Integer(0) });//, "Message Type");
-                                  this.add(ST.class, true, 1, 20, new Object[]{ getMessage(), new Integer(0) });//, "Message Control ID");
-                                  this.add(PT.class, true, 1, 3, new Object[]{ getMessage(), new Integer(0) });//, "Processing ID");
-                                  this.add(VID.class, true, 1, 973, new Object[]{ getMessage(), new Integer(0) });//, "Version ID");
-                                  this.add(NM.class, false, -1, 15, new Object[]{ getMessage(), new Integer(0) });//, "Sequence Number");
-                                  this.add(ST.class, false, -1, 180, new Object[]{ getMessage(), new Integer(0) });//, "Continuation Pointer");
-                                  this.add(ID.class, false, -1, 2, new Object[]{ getMessage() });//, "Accept Acknowledgment Type");
-                                  this.add(ID.class, false, -1, 2, new Object[]{ getMessage() });//, "Application Acknowledgment Type");
-                                  this.add(ID.class, false, 1, 3, new Object[]{ getMessage() });//, "Country Code");
-                                  this.add(ID.class, false, -1, 16, new Object[]{ getMessage() });//, "Character Set");
-                                  this.add(CE.class, false, 1, 483, new Object[]{ getMessage(), new Integer(0) });//, "Principal Language Of Message");
-                                  this.add(ID.class, false, 1, 20, new Object[]{ getMessage() });//, "Alternate Character Set Handling Scheme");
-                                  this.add(EI.class, false, -1, 427, new Object[]{ getMessage(), new Integer(0) });//, "Message Profile Identifier");
+                                  this.add(ST.class, true, 1, 1, new Object[]{ getMessage(), new Integer(0) }, "Field Separator");
+                                  this.add(ST.class, true, 1, 4, new Object[]{ getMessage(), new Integer(0) }, "Encoding Characters");
+                                  this.add(HD.class, false, 1, 227, new Object[]{ getMessage(), new Integer(361) }, "Sending Application");
+                                  this.add(HD.class, false, 1, 227, new Object[]{ getMessage(), new Integer(362) }, "Sending Facility");
+                                  this.add(HD.class, false, 1, 227, new Object[]{ getMessage(), new Integer(361) }, "Receiving Application");
+                                  this.add(HD.class, false, 1, 227, new Object[]{ getMessage(), new Integer(362) }, "Receiving Facility");
+                                  this.add(TS.class, true, 1, 26, new Object[]{ getMessage(), new Integer(0) }, "Date/Time Of Message");
+                                  this.add(ST.class, false, -1, 40, new Object[]{ getMessage(), new Integer(0) }, "Security");
+                                  this.add(MSG.class, true, 1, 15, new Object[]{ getMessage(), new Integer(0) }, "Message Type");
+                                  this.add(ST.class, true, 1, 20, new Object[]{ getMessage(), new Integer(0) }, "Message Control ID");
+                                  this.add(PT.class, true, 1, 3, new Object[]{ getMessage(), new Integer(0) }, "Processing ID");
+                                  this.add(VID.class, true, 1, 973, new Object[]{ getMessage(), new Integer(0) }, "Version ID");
+                                  this.add(NM.class, false, -1, 15, new Object[]{ getMessage(), new Integer(0) }, "Sequence Number");
+                                  this.add(ST.class, false, -1, 180, new Object[]{ getMessage(), new Integer(0) }, "Continuation Pointer");
+                                  this.add(ID.class, false, -1, 2, new Object[]{ getMessage() }, "Accept Acknowledgment Type");
+                                  this.add(ID.class, false, -1, 2, new Object[]{ getMessage() }, "Application Acknowledgment Type");
+                                  this.add(ID.class, false, 1, 3, new Object[]{ getMessage() }, "Country Code");
+                                  this.add(ID.class, false, -1, 16, new Object[]{ getMessage() }, "Character Set");
+                                  this.add(CE.class, false, 1, 483, new Object[]{ getMessage(), new Integer(0) }, "Principal Language Of Message");
+                                  this.add(ID.class, false, 1, 20, new Object[]{ getMessage() }, "Alternate Character Set Handling Scheme");
+                                  this.add(EI.class, false, -1, 427, new Object[]{ getMessage(), new Integer(0) }, "Message Profile Identifier");
        } catch(HL7Exception e) {
           HapiLogFactory.getHapiLog(this.getClass()).error("Unexpected error creating MSH - this is probably a bug in the source code generator.", e);
        }
@@ -478,53 +478,53 @@ public class MSH extends AbstractSegment {
 
 
 
-//    /**
-//     * Inserts a repetition of
-//     * MSH-8: "Security" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ST insertSecurity(int rep) throws HL7Exception { 
-//        return (ST) super.insertRepetition(8, rep);
-//    }
-//
-//
-//
-//    /**
-//     * Inserts a repetition of
-//     * MSH-8: "Security" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ST insertMsh8_Security(int rep) throws HL7Exception { 
-//        return (ST) super.insertRepetition(8, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * MSH-8: "Security" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ST removeSecurity(int rep) throws HL7Exception { 
-//        return (ST) super.removeRepetition(8, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * MSH-8: "Security" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ST removeMsh8_Security(int rep) throws HL7Exception { 
-//        return (ST) super.removeRepetition(8, rep);
-//    }
+    /**
+     * Inserts a repetition of
+     * MSH-8: "Security" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ST insertSecurity(int rep) throws HL7Exception { 
+        return (ST) super.insertRepetition(8, rep);
+    }
+
+
+
+    /**
+     * Inserts a repetition of
+     * MSH-8: "Security" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ST insertMsh8_Security(int rep) throws HL7Exception { 
+        return (ST) super.insertRepetition(8, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * MSH-8: "Security" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ST removeSecurity(int rep) throws HL7Exception { 
+        return (ST) super.removeRepetition(8, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * MSH-8: "Security" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ST removeMsh8_Security(int rep) throws HL7Exception { 
+        return (ST) super.removeRepetition(8, rep);
+    }
 
 
 
@@ -798,53 +798,53 @@ public class MSH extends AbstractSegment {
 
 
 
-//    /**
-//     * Inserts a repetition of
-//     * MSH-13: "Sequence Number" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public NM insertSequenceNumber(int rep) throws HL7Exception { 
-//        return (NM) super.insertRepetition(13, rep);
-//    }
-//
-//
-//
-//    /**
-//     * Inserts a repetition of
-//     * MSH-13: "Sequence Number" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public NM insertMsh13_SequenceNumber(int rep) throws HL7Exception { 
-//        return (NM) super.insertRepetition(13, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * MSH-13: "Sequence Number" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public NM removeSequenceNumber(int rep) throws HL7Exception { 
-//        return (NM) super.removeRepetition(13, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * MSH-13: "Sequence Number" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public NM removeMsh13_SequenceNumber(int rep) throws HL7Exception { 
-//        return (NM) super.removeRepetition(13, rep);
-//    }
+    /**
+     * Inserts a repetition of
+     * MSH-13: "Sequence Number" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public NM insertSequenceNumber(int rep) throws HL7Exception { 
+        return (NM) super.insertRepetition(13, rep);
+    }
+
+
+
+    /**
+     * Inserts a repetition of
+     * MSH-13: "Sequence Number" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public NM insertMsh13_SequenceNumber(int rep) throws HL7Exception { 
+        return (NM) super.insertRepetition(13, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * MSH-13: "Sequence Number" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public NM removeSequenceNumber(int rep) throws HL7Exception { 
+        return (NM) super.removeRepetition(13, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * MSH-13: "Sequence Number" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public NM removeMsh13_SequenceNumber(int rep) throws HL7Exception { 
+        return (NM) super.removeRepetition(13, rep);
+    }
 
 
 
@@ -954,53 +954,53 @@ public class MSH extends AbstractSegment {
 
 
 
-//    /**
-//     * Inserts a repetition of
-//     * MSH-14: "Continuation Pointer" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ST insertContinuationPointer(int rep) throws HL7Exception { 
-//        return (ST) super.insertRepetition(14, rep);
-//    }
-//
-//
-//
-//    /**
-//     * Inserts a repetition of
-//     * MSH-14: "Continuation Pointer" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ST insertMsh14_ContinuationPointer(int rep) throws HL7Exception { 
-//        return (ST) super.insertRepetition(14, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * MSH-14: "Continuation Pointer" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ST removeContinuationPointer(int rep) throws HL7Exception { 
-//        return (ST) super.removeRepetition(14, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * MSH-14: "Continuation Pointer" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ST removeMsh14_ContinuationPointer(int rep) throws HL7Exception { 
-//        return (ST) super.removeRepetition(14, rep);
-//    }
+    /**
+     * Inserts a repetition of
+     * MSH-14: "Continuation Pointer" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ST insertContinuationPointer(int rep) throws HL7Exception { 
+        return (ST) super.insertRepetition(14, rep);
+    }
+
+
+
+    /**
+     * Inserts a repetition of
+     * MSH-14: "Continuation Pointer" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ST insertMsh14_ContinuationPointer(int rep) throws HL7Exception { 
+        return (ST) super.insertRepetition(14, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * MSH-14: "Continuation Pointer" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ST removeContinuationPointer(int rep) throws HL7Exception { 
+        return (ST) super.removeRepetition(14, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * MSH-14: "Continuation Pointer" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ST removeMsh14_ContinuationPointer(int rep) throws HL7Exception { 
+        return (ST) super.removeRepetition(14, rep);
+    }
 
 
 
@@ -1110,53 +1110,53 @@ public class MSH extends AbstractSegment {
 
 
 
-//    /**
-//     * Inserts a repetition of
-//     * MSH-15: "Accept Acknowledgment Type" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ID insertAcceptAcknowledgmentType(int rep) throws HL7Exception { 
-//        return (ID) super.insertRepetition(15, rep);
-//    }
-//
-//
-//
-//    /**
-//     * Inserts a repetition of
-//     * MSH-15: "Accept Acknowledgment Type" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ID insertMsh15_AcceptAcknowledgmentType(int rep) throws HL7Exception { 
-//        return (ID) super.insertRepetition(15, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * MSH-15: "Accept Acknowledgment Type" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ID removeAcceptAcknowledgmentType(int rep) throws HL7Exception { 
-//        return (ID) super.removeRepetition(15, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * MSH-15: "Accept Acknowledgment Type" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ID removeMsh15_AcceptAcknowledgmentType(int rep) throws HL7Exception { 
-//        return (ID) super.removeRepetition(15, rep);
-//    }
+    /**
+     * Inserts a repetition of
+     * MSH-15: "Accept Acknowledgment Type" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ID insertAcceptAcknowledgmentType(int rep) throws HL7Exception { 
+        return (ID) super.insertRepetition(15, rep);
+    }
+
+
+
+    /**
+     * Inserts a repetition of
+     * MSH-15: "Accept Acknowledgment Type" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ID insertMsh15_AcceptAcknowledgmentType(int rep) throws HL7Exception { 
+        return (ID) super.insertRepetition(15, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * MSH-15: "Accept Acknowledgment Type" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ID removeAcceptAcknowledgmentType(int rep) throws HL7Exception { 
+        return (ID) super.removeRepetition(15, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * MSH-15: "Accept Acknowledgment Type" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ID removeMsh15_AcceptAcknowledgmentType(int rep) throws HL7Exception { 
+        return (ID) super.removeRepetition(15, rep);
+    }
 
 
 
@@ -1266,53 +1266,53 @@ public class MSH extends AbstractSegment {
 
 
 
-//    /**
-//     * Inserts a repetition of
-//     * MSH-16: "Application Acknowledgment Type" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ID insertApplicationAcknowledgmentType(int rep) throws HL7Exception { 
-//        return (ID) super.insertRepetition(16, rep);
-//    }
-//
-//
-//
-//    /**
-//     * Inserts a repetition of
-//     * MSH-16: "Application Acknowledgment Type" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ID insertMsh16_ApplicationAcknowledgmentType(int rep) throws HL7Exception { 
-//        return (ID) super.insertRepetition(16, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * MSH-16: "Application Acknowledgment Type" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ID removeApplicationAcknowledgmentType(int rep) throws HL7Exception { 
-//        return (ID) super.removeRepetition(16, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * MSH-16: "Application Acknowledgment Type" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ID removeMsh16_ApplicationAcknowledgmentType(int rep) throws HL7Exception { 
-//        return (ID) super.removeRepetition(16, rep);
-//    }
+    /**
+     * Inserts a repetition of
+     * MSH-16: "Application Acknowledgment Type" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ID insertApplicationAcknowledgmentType(int rep) throws HL7Exception { 
+        return (ID) super.insertRepetition(16, rep);
+    }
+
+
+
+    /**
+     * Inserts a repetition of
+     * MSH-16: "Application Acknowledgment Type" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ID insertMsh16_ApplicationAcknowledgmentType(int rep) throws HL7Exception { 
+        return (ID) super.insertRepetition(16, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * MSH-16: "Application Acknowledgment Type" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ID removeApplicationAcknowledgmentType(int rep) throws HL7Exception { 
+        return (ID) super.removeRepetition(16, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * MSH-16: "Application Acknowledgment Type" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ID removeMsh16_ApplicationAcknowledgmentType(int rep) throws HL7Exception { 
+        return (ID) super.removeRepetition(16, rep);
+    }
 
 
 
@@ -1463,53 +1463,53 @@ public class MSH extends AbstractSegment {
 
 
 
-//    /**
-//     * Inserts a repetition of
-//     * MSH-18: "Character Set" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ID insertCharacterSet(int rep) throws HL7Exception { 
-//        return (ID) super.insertRepetition(18, rep);
-//    }
-//
-//
-//
-//    /**
-//     * Inserts a repetition of
-//     * MSH-18: "Character Set" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ID insertMsh18_CharacterSet(int rep) throws HL7Exception { 
-//        return (ID) super.insertRepetition(18, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * MSH-18: "Character Set" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ID removeCharacterSet(int rep) throws HL7Exception { 
-//        return (ID) super.removeRepetition(18, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * MSH-18: "Character Set" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ID removeMsh18_CharacterSet(int rep) throws HL7Exception { 
-//        return (ID) super.removeRepetition(18, rep);
-//    }
+    /**
+     * Inserts a repetition of
+     * MSH-18: "Character Set" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ID insertCharacterSet(int rep) throws HL7Exception { 
+        return (ID) super.insertRepetition(18, rep);
+    }
+
+
+
+    /**
+     * Inserts a repetition of
+     * MSH-18: "Character Set" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ID insertMsh18_CharacterSet(int rep) throws HL7Exception { 
+        return (ID) super.insertRepetition(18, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * MSH-18: "Character Set" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ID removeCharacterSet(int rep) throws HL7Exception { 
+        return (ID) super.removeRepetition(18, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * MSH-18: "Character Set" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ID removeMsh18_CharacterSet(int rep) throws HL7Exception { 
+        return (ID) super.removeRepetition(18, rep);
+    }
 
 
 
@@ -1701,53 +1701,53 @@ public class MSH extends AbstractSegment {
 
 
 
-//    /**
-//     * Inserts a repetition of
-//     * MSH-21: "Message Profile Identifier" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public EI insertMessageProfileIdentifier(int rep) throws HL7Exception { 
-//        return (EI) super.insertRepetition(21, rep);
-//    }
-//
-//
-//
-//    /**
-//     * Inserts a repetition of
-//     * MSH-21: "Message Profile Identifier" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public EI insertMsh21_MessageProfileIdentifier(int rep) throws HL7Exception { 
-//        return (EI) super.insertRepetition(21, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * MSH-21: "Message Profile Identifier" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public EI removeMessageProfileIdentifier(int rep) throws HL7Exception { 
-//        return (EI) super.removeRepetition(21, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * MSH-21: "Message Profile Identifier" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public EI removeMsh21_MessageProfileIdentifier(int rep) throws HL7Exception { 
-//        return (EI) super.removeRepetition(21, rep);
-//    }
+    /**
+     * Inserts a repetition of
+     * MSH-21: "Message Profile Identifier" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public EI insertMessageProfileIdentifier(int rep) throws HL7Exception { 
+        return (EI) super.insertRepetition(21, rep);
+    }
+
+
+
+    /**
+     * Inserts a repetition of
+     * MSH-21: "Message Profile Identifier" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public EI insertMsh21_MessageProfileIdentifier(int rep) throws HL7Exception { 
+        return (EI) super.insertRepetition(21, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * MSH-21: "Message Profile Identifier" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public EI removeMessageProfileIdentifier(int rep) throws HL7Exception { 
+        return (EI) super.removeRepetition(21, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * MSH-21: "Message Profile Identifier" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public EI removeMsh21_MessageProfileIdentifier(int rep) throws HL7Exception { 
+        return (EI) super.removeRepetition(21, rep);
+    }
 
 
 

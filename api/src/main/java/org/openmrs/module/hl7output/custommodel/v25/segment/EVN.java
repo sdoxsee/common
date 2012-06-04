@@ -44,13 +44,13 @@ public class EVN extends AbstractSegment {
 
     private void init(ModelClassFactory factory) {
        try {
-                                  this.add(ID.class, false, -1, 3, new Object[]{ getMessage() });//, "Event Type Code");
-                                  this.add(TS.class, true, 1, 26, new Object[]{ getMessage(), new Integer(0) });//, "Recorded Date/Time");
-                                  this.add(TS.class, false, -1, 26, new Object[]{ getMessage(), new Integer(0) });//, "Date/Time Planned Event");
-                                  this.add(IS.class, false, -1, 3, new Object[]{ getMessage() });//, "Event Reason Code");
-                                  this.add(XCN.class, false, -1, 2718, new Object[]{ getMessage(), new Integer(188) });//, "Operator ID");
-                                  this.add(TS.class, false, -1, 26, new Object[]{ getMessage(), new Integer(0) });//, "Event Occurred");
-                                  this.add(HD.class, false, 1, 241, new Object[]{ getMessage(), new Integer(0) });//, "Event Facility");
+                                  this.add(ID.class, false, -1, 3, new Object[]{ getMessage() }, "Event Type Code");
+                                  this.add(TS.class, true, 1, 26, new Object[]{ getMessage(), new Integer(0) }, "Recorded Date/Time");
+                                  this.add(TS.class, false, -1, 26, new Object[]{ getMessage(), new Integer(0) }, "Date/Time Planned Event");
+                                  this.add(IS.class, false, -1, 3, new Object[]{ getMessage() }, "Event Reason Code");
+                                  this.add(XCN.class, false, -1, 2718, new Object[]{ getMessage(), new Integer(188) }, "Operator ID");
+                                  this.add(TS.class, false, -1, 26, new Object[]{ getMessage(), new Integer(0) }, "Event Occurred");
+                                  this.add(HD.class, false, 1, 241, new Object[]{ getMessage(), new Integer(0) }, "Event Facility");
        } catch(HL7Exception e) {
           HapiLogFactory.getHapiLog(this.getClass()).error("Unexpected error creating EVN - this is probably a bug in the source code generator.", e);
        }
@@ -163,53 +163,53 @@ public class EVN extends AbstractSegment {
 
 
 
-//    /**
-//     * Inserts a repetition of
-//     * EVN-1: "Event Type Code" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ID insertEventTypeCode(int rep) throws HL7Exception { 
-//        return (ID) super.insertRepetition(1, rep);
-//    }
-//
-//
-//
-//    /**
-//     * Inserts a repetition of
-//     * EVN-1: "Event Type Code" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ID insertEvn1_EventTypeCode(int rep) throws HL7Exception { 
-//        return (ID) super.insertRepetition(1, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * EVN-1: "Event Type Code" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ID removeEventTypeCode(int rep) throws HL7Exception { 
-//        return (ID) super.removeRepetition(1, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * EVN-1: "Event Type Code" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public ID removeEvn1_EventTypeCode(int rep) throws HL7Exception { 
-//        return (ID) super.removeRepetition(1, rep);
-//    }
+    /**
+     * Inserts a repetition of
+     * EVN-1: "Event Type Code" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ID insertEventTypeCode(int rep) throws HL7Exception { 
+        return (ID) super.insertRepetition(1, rep);
+    }
+
+
+
+    /**
+     * Inserts a repetition of
+     * EVN-1: "Event Type Code" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ID insertEvn1_EventTypeCode(int rep) throws HL7Exception { 
+        return (ID) super.insertRepetition(1, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * EVN-1: "Event Type Code" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ID removeEventTypeCode(int rep) throws HL7Exception { 
+        return (ID) super.removeRepetition(1, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * EVN-1: "Event Type Code" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public ID removeEvn1_EventTypeCode(int rep) throws HL7Exception { 
+        return (ID) super.removeRepetition(1, rep);
+    }
 
 
 
@@ -360,53 +360,53 @@ public class EVN extends AbstractSegment {
 
 
 
-//    /**
-//     * Inserts a repetition of
-//     * EVN-3: "Date/Time Planned Event" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public TS insertDateTimePlannedEvent(int rep) throws HL7Exception { 
-//        return (TS) super.insertRepetition(3, rep);
-//    }
-//
-//
-//
-//    /**
-//     * Inserts a repetition of
-//     * EVN-3: "Date/Time Planned Event" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public TS insertEvn3_DateTimePlannedEvent(int rep) throws HL7Exception { 
-//        return (TS) super.insertRepetition(3, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * EVN-3: "Date/Time Planned Event" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public TS removeDateTimePlannedEvent(int rep) throws HL7Exception { 
-//        return (TS) super.removeRepetition(3, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * EVN-3: "Date/Time Planned Event" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public TS removeEvn3_DateTimePlannedEvent(int rep) throws HL7Exception { 
-//        return (TS) super.removeRepetition(3, rep);
-//    }
+    /**
+     * Inserts a repetition of
+     * EVN-3: "Date/Time Planned Event" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public TS insertDateTimePlannedEvent(int rep) throws HL7Exception { 
+        return (TS) super.insertRepetition(3, rep);
+    }
+
+
+
+    /**
+     * Inserts a repetition of
+     * EVN-3: "Date/Time Planned Event" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public TS insertEvn3_DateTimePlannedEvent(int rep) throws HL7Exception { 
+        return (TS) super.insertRepetition(3, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * EVN-3: "Date/Time Planned Event" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public TS removeDateTimePlannedEvent(int rep) throws HL7Exception { 
+        return (TS) super.removeRepetition(3, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * EVN-3: "Date/Time Planned Event" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public TS removeEvn3_DateTimePlannedEvent(int rep) throws HL7Exception { 
+        return (TS) super.removeRepetition(3, rep);
+    }
 
 
 
@@ -516,53 +516,53 @@ public class EVN extends AbstractSegment {
 
 
 
-//    /**
-//     * Inserts a repetition of
-//     * EVN-4: "Event Reason Code" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public IS insertEventReasonCode(int rep) throws HL7Exception { 
-//        return (IS) super.insertRepetition(4, rep);
-//    }
-//
-//
-//
-//    /**
-//     * Inserts a repetition of
-//     * EVN-4: "Event Reason Code" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public IS insertEvn4_EventReasonCode(int rep) throws HL7Exception { 
-//        return (IS) super.insertRepetition(4, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * EVN-4: "Event Reason Code" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public IS removeEventReasonCode(int rep) throws HL7Exception { 
-//        return (IS) super.removeRepetition(4, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * EVN-4: "Event Reason Code" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public IS removeEvn4_EventReasonCode(int rep) throws HL7Exception { 
-//        return (IS) super.removeRepetition(4, rep);
-//    }
+    /**
+     * Inserts a repetition of
+     * EVN-4: "Event Reason Code" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public IS insertEventReasonCode(int rep) throws HL7Exception { 
+        return (IS) super.insertRepetition(4, rep);
+    }
+
+
+
+    /**
+     * Inserts a repetition of
+     * EVN-4: "Event Reason Code" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public IS insertEvn4_EventReasonCode(int rep) throws HL7Exception { 
+        return (IS) super.insertRepetition(4, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * EVN-4: "Event Reason Code" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public IS removeEventReasonCode(int rep) throws HL7Exception { 
+        return (IS) super.removeRepetition(4, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * EVN-4: "Event Reason Code" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public IS removeEvn4_EventReasonCode(int rep) throws HL7Exception { 
+        return (IS) super.removeRepetition(4, rep);
+    }
 
 
 
@@ -672,53 +672,53 @@ public class EVN extends AbstractSegment {
 
 
 
-//    /**
-//     * Inserts a repetition of
-//     * EVN-5: "Operator ID" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public XCN insertOperatorID(int rep) throws HL7Exception { 
-//        return (XCN) super.insertRepetition(5, rep);
-//    }
-//
-//
-//
-//    /**
-//     * Inserts a repetition of
-//     * EVN-5: "Operator ID" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public XCN insertEvn5_OperatorID(int rep) throws HL7Exception { 
-//        return (XCN) super.insertRepetition(5, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * EVN-5: "Operator ID" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public XCN removeOperatorID(int rep) throws HL7Exception { 
-//        return (XCN) super.removeRepetition(5, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * EVN-5: "Operator ID" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public XCN removeEvn5_OperatorID(int rep) throws HL7Exception { 
-//        return (XCN) super.removeRepetition(5, rep);
-//    }
+    /**
+     * Inserts a repetition of
+     * EVN-5: "Operator ID" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public XCN insertOperatorID(int rep) throws HL7Exception { 
+        return (XCN) super.insertRepetition(5, rep);
+    }
+
+
+
+    /**
+     * Inserts a repetition of
+     * EVN-5: "Operator ID" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public XCN insertEvn5_OperatorID(int rep) throws HL7Exception { 
+        return (XCN) super.insertRepetition(5, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * EVN-5: "Operator ID" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public XCN removeOperatorID(int rep) throws HL7Exception { 
+        return (XCN) super.removeRepetition(5, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * EVN-5: "Operator ID" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public XCN removeEvn5_OperatorID(int rep) throws HL7Exception { 
+        return (XCN) super.removeRepetition(5, rep);
+    }
 
 
 
@@ -828,53 +828,53 @@ public class EVN extends AbstractSegment {
 
 
 
-//    /**
-//     * Inserts a repetition of
-//     * EVN-6: "Event Occurred" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public TS insertEventOccurred(int rep) throws HL7Exception { 
-//        return (TS) super.insertRepetition(6, rep);
-//    }
-//
-//
-//
-//    /**
-//     * Inserts a repetition of
-//     * EVN-6: "Event Occurred" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public TS insertEvn6_EventOccurred(int rep) throws HL7Exception { 
-//        return (TS) super.insertRepetition(6, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * EVN-6: "Event Occurred" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public TS removeEventOccurred(int rep) throws HL7Exception { 
-//        return (TS) super.removeRepetition(6, rep);
-//    }
-//
-//
-//    /**
-//     * Removes a repetition of
-//     * EVN-6: "Event Occurred" at a specific index
-//     *
-//     * @param rep The repetition index (0-indexed)
-//     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
-//     */
-//    public TS removeEvn6_EventOccurred(int rep) throws HL7Exception { 
-//        return (TS) super.removeRepetition(6, rep);
-//    }
+    /**
+     * Inserts a repetition of
+     * EVN-6: "Event Occurred" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public TS insertEventOccurred(int rep) throws HL7Exception { 
+        return (TS) super.insertRepetition(6, rep);
+    }
+
+
+
+    /**
+     * Inserts a repetition of
+     * EVN-6: "Event Occurred" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public TS insertEvn6_EventOccurred(int rep) throws HL7Exception { 
+        return (TS) super.insertRepetition(6, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * EVN-6: "Event Occurred" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public TS removeEventOccurred(int rep) throws HL7Exception { 
+        return (TS) super.removeRepetition(6, rep);
+    }
+
+
+    /**
+     * Removes a repetition of
+     * EVN-6: "Event Occurred" at a specific index
+     *
+     * @param rep The repetition index (0-indexed)
+     * @throws HL7Exception If the rep is invalid (below 0, or too high for the allowable repetitions)
+     */
+    public TS removeEvn6_EventOccurred(int rep) throws HL7Exception { 
+        return (TS) super.removeRepetition(6, rep);
+    }
 
 
 
